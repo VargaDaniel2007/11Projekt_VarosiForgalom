@@ -1,0 +1,13 @@
+Kereszteződés:
+Kezeli a lámpát -> átadja az utasítást az útnak
+
+Út:
+Autók kezelése: Random megjelenés, várakozási idő szerinti színezés, gyalogosok stb
+	- Lámpa: egyik úthoz tartozó lámpa
+
+Közlekedők:
+	Autó:
+	Melyik úton van, mennyi ideje vár, hosszú várakozás ideje esetén esetleges váratlan esemény
+
+	Gyalogos:
+	Út szélén várakozik, átmegy az úton és elmegy, ha a gyalogos lámpa aktív, akkor az összes közlekedési lámpa vörös
