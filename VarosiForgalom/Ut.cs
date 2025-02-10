@@ -10,8 +10,10 @@ namespace VarosiForgalom
     {
         public string Nev { get; set; }
         public Lampa Lampa { get; set; }
-        public List<Auto> autokUton { get; set; } = new List<Auto>();
-        public List<Gyalogos> gyalogosUton { get; set; } = new List<Gyalogos>();
+        public List<Auto> AutokUton { get; set; } = new List<Auto>();
+        public int AutoSzam { get {  return AutokUton.Count; } }
+        public List<Gyalogos> GyalogosUton { get; set; } = new List<Gyalogos>();
+        public int GyalogosSzam { get { return GyalogosUton.Count; } }
 
         public Ut(string nev)
         {
