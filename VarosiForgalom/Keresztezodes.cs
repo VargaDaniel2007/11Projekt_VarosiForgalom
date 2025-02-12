@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,7 +26,7 @@ namespace VarosiForgalom
                 {
                     auto.TartozkodasiIdo += 1;
                 }
-                int szam = rand.Next(0, 4);
+                int szam = rand.Next(0, 2);
                 if (szam > 0)
                 {
                     for( int i = 0; i < szam; i++)
@@ -36,31 +37,71 @@ namespace VarosiForgalom
             }
         }
 
-        public void IrasPlaceholder()
+        public void Haladas(int utIndex)
+        {
+            foreach(Ut u in this.Utak)
+            {
+                u.AutokTavoz.Clear();
+            }
+
+            Ut ut = Utak[utIndex];
+            Ut athaladUt = Utak[(utIndex + Utak.Count/2) % Utak.Count];
+            ut.Lampa.HaladasEngedely = true;
+            IrasPlaceholder("Lámpa átváltva");
+            System.Threading.Thread.Sleep(3000);
+            int autoHalad = rand.Next(1, 5);
+            if (ut.AutoSzam > autoHalad)
+            {
+                for(int i = 0; i < autoHalad; i++)
+                {
+                    athaladUt.AutokTavoz.Add(ut.AutokUton[i]);
+                    ut.AutokUton.RemoveAt(i);
+                }
+            }
+            else    //Kevesebb mint a randomolt érték mind átmegy
+            {
+                autoHalad = ut.AutoSzam;
+                for (int i = 0; i < autoHalad; i++)
+                {
+                    athaladUt.AutokTavoz.Add(ut.AutokUton[0]);
+                    ut.AutokUton.RemoveAt(0);
+                }
+            }
+            ut.Lampa.HaladasEngedely = false;
+            IrasPlaceholder("Autósok áthaladnak");
+            System.Threading.Thread.Sleep(3000);
+        }
+
+
+        public void IrasPlaceholder(string helyzet)
         {
             Console.Clear();
             Console.SetCursorPosition(0, 0);
-            Console.Write("0..Kilépés\t\t1..Autó randomizálás");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine($"0..Kilépés \t{helyzet}");
+            Console.SetCursorPosition(0, Console.WindowHeight - this.Utak.Count - 2);
+            Console.WriteLine("Lámpák gombjai:");
+            for(int i = 0; i < this.Utak.Count; i++)
+            {
+                Console.WriteLine($"{i+1}.. {Utak[i].Nev}");
+            }
 
-            Console.SetCursorPosition(95, 2);
-            Console.WriteLine("Utca1");
-            Console.SetCursorPosition(95, 3);
-            Console.WriteLine($"{Utak[0].AutoSzam} autó");
+            Console.ForegroundColor = ConsoleColor.Red;
 
-            Console.SetCursorPosition(190, 25);
-            Console.WriteLine("Utca2");
-            Console.SetCursorPosition(190, 26);
-            Console.WriteLine($"{Utak[1].AutoSzam} autó");
+            foreach (Ut ut in this.Utak)
+            {
+                Console.SetCursorPosition(ut.kiirasHelye[0], ut.kiirasHelye[1]);
 
-            Console.SetCursorPosition(95, 47);
-            Console.WriteLine("Utca3");
-            Console.SetCursorPosition(95, 48);
-            Console.WriteLine($"{Utak[2].AutoSzam} autó");
+                if (ut.Lampa.HaladasEngedely) Console.ForegroundColor = ConsoleColor.Green;
+                else Console.ForegroundColor = ConsoleColor.Red;
 
-            Console.SetCursorPosition(2, 25);
-            Console.WriteLine("Utca4");
-            Console.SetCursorPosition(2, 26);
-            Console.WriteLine($"{Utak[3].AutoSzam} autó");
+                Console.WriteLine(ut.Nev);
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.SetCursorPosition(ut.kiirasHelye[0], ut.kiirasHelye[1] + 1);
+                Console.WriteLine($"{ut.AutoSzam} autó {ut.kiirasIkon}");
+                Console.SetCursorPosition(ut.kiirasHelye[0], ut.kiirasHelye[1] + 2);
+                Console.WriteLine($"{ut.AutoSzamTavoz} autó {ut.kiirasIkonEllen}");
+            }
         }
     }
 }
