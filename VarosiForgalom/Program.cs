@@ -13,37 +13,53 @@ namespace VarosiForgalom
 
             List<Ut> utak = new List<Ut>();
 
-            utak.Add(new Ut("Utca1", [95, 2], "V", "T"));
-            utak.Add(new Ut("Utca2", [190, 25], "<-", "->"));
-            utak.Add(new Ut("Utca3", [95, 46], "T", "V"));
-            utak.Add(new Ut("Utca4", [2, 25], "->", "<-"));
+            utak.Add(new Ut("Utca1", 'E'));
+            utak.Add(new Ut("Utca2", 'K'));
+            utak.Add(new Ut("Utca3", 'D'));
+            utak.Add(new Ut("Utca4", 'N'));
 
             Keresztezodes kereszt = new Keresztezodes(utak);
 
-            //kereszt.IrasPlaceholder();
-            //Console.ReadKey(true);
+            kereszt.Kiiras.KeresztRajz();
+            Console.SetCursorPosition(92, 19);
+            kereszt.Kiiras.Auto('N', [90, 26], ConsoleColor.White);
+            //Console.Write("A");
+
+            Console.ReadKey();
+            /*
+            kereszt.AutoSpawn();
+            kereszt.IrasPlaceholder("Válasszon a Lámpa zölddé változtatásához");
             int v = -1;
             while(v != 0)
             {
-                kereszt.AutoSpawn();
-                kereszt.IrasPlaceholder("Válasszon a Lámpa zölddé változtatása");
                 v = Menu();
-                switch (v)
+                try
                 {
-                    case 1:
-                        kereszt.Haladas(v - 1);
-                        break;
-                    case 2:
-                        kereszt.Haladas(v - 1);
-                        break;
-                    case 3:
-                        kereszt.Haladas(v - 1);
-                        break;
-                    case 4:
-                        kereszt.Haladas(v - 1);
-                        break;
+                    switch (v)
+                    {
+                        case 1:
+                            kereszt.Haladas(v - 1);
+                            break;
+                        case 2:
+                            kereszt.Haladas(v - 1);
+                            break;
+                        case 3:
+                            kereszt.Haladas(v - 1);
+                            break;
+                        case 4:
+                            kereszt.Haladas(v - 1);
+                            break;
+                    }
+                    kereszt.AutoSpawn();
+                    kereszt.IrasPlaceholder("Válasszon a Lámpa zölddé változtatásához");
+                }
+                catch (Exception e) {
+                    kereszt.IrasPlaceholder(e.Message);
+                    System.Threading.Thread.Sleep(4000);
+                    kereszt.IrasPlaceholder("Válasszon a Lámpa zölddé változtatásához");
                 }
             }
+            */
 
         }
 

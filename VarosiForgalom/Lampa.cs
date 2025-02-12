@@ -9,5 +9,6 @@ namespace VarosiForgalom
     public class Lampa
     {
         public bool HaladasEngedely { get; set; } = false;
+        public int Allithato { get; set; } = 0;
     }
 }

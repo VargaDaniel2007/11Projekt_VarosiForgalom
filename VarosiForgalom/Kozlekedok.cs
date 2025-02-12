@@ -9,6 +9,7 @@ namespace VarosiForgalom
 {
     public abstract class Kozlekedok
     {
+        public Ut TartozkodikUt {  get; set; }
         private int tartozkodasiIdo = 0;
         public int TartozkodasiIdo
         {
@@ -24,7 +25,18 @@ namespace VarosiForgalom
 
     public class Auto: Kozlekedok
     {
-        public override void TulHosszuTartozkodas() { throw new NotImplementedException(); }
+        public Auto(Ut u)
+        {
+            this.TartozkodikUt = u;
+        }
+        public override void TulHosszuTartozkodas()
+        {
+            if (TartozkodikUt.Lampa.Allithato == 0)
+            {
+                this.TartozkodikUt.Lampa.Allithato = 2;
+                throw new TimeoutException($"Az autós megrongálta a {TartozkodikUt.Nev} utca Lámpáját, a következő váltásnál nem használható");
+            }
+        }
     }
     public class Gyalogos: Kozlekedok
     {

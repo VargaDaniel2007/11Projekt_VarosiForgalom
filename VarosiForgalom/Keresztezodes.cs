@@ -12,6 +12,7 @@ namespace VarosiForgalom
         Random rand = new Random();
 
         public List<Ut> Utak { get; set; } = new List<Ut>();    //Észak->Kelet->Dél->Nyugat
+        public Kiiras Kiiras { get; } = new Kiiras();
 
         public Keresztezodes(List<Ut> utak)
         {
@@ -31,7 +32,7 @@ namespace VarosiForgalom
                 {
                     for( int i = 0; i < szam; i++)
                     {
-                        ut.AutokUton.Add(new Auto());
+                        ut.AutokUton.Add(new Auto(ut));
                     }
                 }
             }
@@ -39,15 +40,26 @@ namespace VarosiForgalom
 
         public void Haladas(int utIndex)
         {
+            Ut ut = Utak[utIndex];
+
+            if (ut.Lampa.Allithato == 2) throw new Exception("A Lámpa nem állítható");
+
             foreach(Ut u in this.Utak)
             {
                 u.AutokTavoz.Clear();
+                if(u.Lampa.Allithato == 2)
+                {
+                    u.Lampa.Allithato = 1;
+                }
+                else if(u.Lampa.Allithato == 1)
+                {
+                    u.Lampa.Allithato = 0;
+                }
             }
 
-            Ut ut = Utak[utIndex];
             Ut athaladUt = Utak[(utIndex + Utak.Count/2) % Utak.Count];
             ut.Lampa.HaladasEngedely = true;
-            IrasPlaceholder("Lámpa átváltva");
+            //IrasPlaceholder("Lámpa átváltva");
             System.Threading.Thread.Sleep(3000);
             int autoHalad = rand.Next(1, 5);
             if (ut.AutoSzam > autoHalad)
@@ -68,11 +80,11 @@ namespace VarosiForgalom
                 }
             }
             ut.Lampa.HaladasEngedely = false;
-            IrasPlaceholder("Autósok áthaladnak");
+            //IrasPlaceholder("Autósok áthaladnak");
             System.Threading.Thread.Sleep(3000);
         }
 
-
+        /*
         public void IrasPlaceholder(string helyzet)
         {
             Console.Clear();
@@ -83,25 +95,34 @@ namespace VarosiForgalom
             Console.WriteLine("Lámpák gombjai:");
             for(int i = 0; i < this.Utak.Count; i++)
             {
-                Console.WriteLine($"{i+1}.. {Utak[i].Nev}");
+                if (Utak[i].Lampa.Allithato != 2)
+                    Console.WriteLine($"{i+1}.. {Utak[i].Nev}");
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"{i + 1}.. {Utak[i].Nev}");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
             }
 
             Console.ForegroundColor = ConsoleColor.Red;
 
             foreach (Ut ut in this.Utak)
             {
-                Console.SetCursorPosition(ut.kiirasHelye[0], ut.kiirasHelye[1]);
+                Console.SetCursorPosition(ut.KiirasHelye[0], ut.KiirasHelye[1]);
 
                 if (ut.Lampa.HaladasEngedely) Console.ForegroundColor = ConsoleColor.Green;
                 else Console.ForegroundColor = ConsoleColor.Red;
 
                 Console.WriteLine(ut.Nev);
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.SetCursorPosition(ut.kiirasHelye[0], ut.kiirasHelye[1] + 1);
+                Console.SetCursorPosition(ut.KiirasHelye[0], ut.KiirasHelye[1] + 1);
                 Console.WriteLine($"{ut.AutoSzam} autó {ut.kiirasIkon}");
-                Console.SetCursorPosition(ut.kiirasHelye[0], ut.kiirasHelye[1] + 2);
+                Console.SetCursorPosition(ut.KiirasHelye[0], ut.KiirasHelye[1] + 2);
                 Console.WriteLine($"{ut.AutoSzamTavoz} autó {ut.kiirasIkonEllen}");
             }
         }
+    
+        */
     }
 }
