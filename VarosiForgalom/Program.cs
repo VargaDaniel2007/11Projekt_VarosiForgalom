@@ -12,23 +12,17 @@ namespace VarosiForgalom
             Console.CursorVisible = false;
 
             List<Ut> utak = new List<Ut>();
+            Kiiras kr = new Kiiras();
 
             utak.Add(new Ut("Utca1", 'E'));
             utak.Add(new Ut("Utca2", 'K'));
             utak.Add(new Ut("Utca3", 'D'));
             utak.Add(new Ut("Utca4", 'N'));
 
-            Keresztezodes kereszt = new Keresztezodes(utak);
-
-            kereszt.Kiiras.KeresztRajz();
-            Console.SetCursorPosition(92, 19);
-            kereszt.Kiiras.Auto('N', [90, 26], ConsoleColor.White);
-            //Console.Write("A");
-
-            Console.ReadKey();
-            /*
+            Keresztezodes kereszt = new Keresztezodes(utak, kr);
+            
             kereszt.AutoSpawn();
-            kereszt.IrasPlaceholder("Válasszon a Lámpa zölddé változtatásához");
+            kr.TeljesKiiras(kereszt.Utak, "Válasszon a Lámpa zölddé változtatásához");
             int v = -1;
             while(v != 0)
             {
@@ -51,16 +45,14 @@ namespace VarosiForgalom
                             break;
                     }
                     kereszt.AutoSpawn();
-                    kereszt.IrasPlaceholder("Válasszon a Lámpa zölddé változtatásához");
+                    kr.TeljesKiiras(kereszt.Utak, "Válasszon a Lámpa zölddé változtatásához");
                 }
                 catch (Exception e) {
-                    kereszt.IrasPlaceholder(e.Message);
+                    kr.TeljesKiiras(kereszt.Utak, e.Message);
                     System.Threading.Thread.Sleep(4000);
-                    kereszt.IrasPlaceholder("Válasszon a Lámpa zölddé változtatásához");
+                    kr.TeljesKiiras(kereszt.Utak, "Válasszon a Lámpa zölddé változtatásához");
                 }
             }
-            */
-
         }
 
         static int Menu()

@@ -9,16 +9,17 @@ namespace VarosiForgalom
 {
     public class Kiiras
     {
-        public void TeljesKiiras(List<Ut> utak)
+        public void TeljesKiiras(List<Ut> utak, string kiiras)
         {
+            Console.Clear();
             KeresztRajz();
-            UtcaNevek(utak);
+            UtcaNevek(utak, kiiras);
+            AutoKiiras(utak);
         }
 
         public void KeresztRajz()
         {
-            //Console.WriteLine("═════");
-            //Console.WriteLine("█████ ║");
+            
 
             for (int i = 0; i < 20; i++)
             {
@@ -65,9 +66,26 @@ namespace VarosiForgalom
             }
         }
 
-        public void UtcaNevek(List<Ut> utak)
+        public void UtcaNevek(List<Ut> utak, string kiiras)
         {
-            foreach(Ut u in utak)
+            Console.SetCursorPosition(0, 0);
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine($"0..Kilépés \t{kiiras}");
+            Console.SetCursorPosition(0, Console.WindowHeight - utak.Count - 2);
+            Console.WriteLine("Lámpák gombjai:");
+            for (int i = 0; i < utak.Count; i++)
+            {
+                if (utak[i].Lampa.Allithato != 2)
+                    Console.WriteLine($"{i + 1}.. {utak[i].Nev}");
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"{i + 1}.. {utak[i].Nev}");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+            }
+
+            foreach (Ut u in utak)
             {
                 int hossz = u.Nev.Length;
                 if(u.UtIrany == 'E' || u.UtIrany == 'D')
@@ -87,6 +105,55 @@ namespace VarosiForgalom
                 }
             }
         }
+
+        public void AutoKiiras(List<Ut> utak)
+        {
+            foreach (Ut u in utak)
+            {
+                if(u.UtIrany == 'E' ||u.UtIrany == 'D') { 
+                    int aSzam = 0;
+                    foreach (var a in u.AutokUton)
+                    {
+                        ConsoleColor aSzin;
+                        if (a.TartozkodasiIdo <= 1) aSzin = ConsoleColor.Green;
+                        else if (a.TartozkodasiIdo > 1 && a.TartozkodasiIdo < 4) aSzin = ConsoleColor.Yellow;
+                        else aSzin = ConsoleColor.Red;
+                        Auto(u.UtIrany, [u.AutokHelye[0], u.AutokHelye[1] - aSzam * u.AutoHossz], aSzin);
+
+                        aSzam++;
+
+                    }
+                    aSzam = 0;
+                    foreach (var a in u.AutokTavoz)
+                    {
+                        Auto(u.TavozoIrany, [u.TavozoAutokHelye[0], u.TavozoAutokHelye[1] + aSzam * u.AutoHossz], ConsoleColor.White);
+                        aSzam++;
+                    }
+                }
+                else
+                {
+                    int aSzam = 0;
+                    foreach (var a in u.AutokUton)
+                    {
+                        ConsoleColor aSzin;
+                        if (a.TartozkodasiIdo < 2) aSzin = ConsoleColor.Green;
+                        else if (a.TartozkodasiIdo == 2) aSzin = ConsoleColor.Yellow;
+                        else aSzin = ConsoleColor.Red;
+                        Auto(u.UtIrany, [u.AutokHelye[0] - aSzam * u.AutoHossz, u.AutokHelye[1]], aSzin);
+
+                        aSzam++;
+
+                    }
+                    aSzam = 0;
+                    foreach (var a in u.AutokTavoz)
+                    {
+                        Auto(u.TavozoIrany, [u.TavozoAutokHelye[0] + aSzam * u.AutoHossz, u.TavozoAutokHelye[1]], ConsoleColor.White);
+                        aSzam++;
+                    }
+                }
+            }
+        }
+
 
         public void Auto(char irany, int[] koordinata, ConsoleColor szin)
         {

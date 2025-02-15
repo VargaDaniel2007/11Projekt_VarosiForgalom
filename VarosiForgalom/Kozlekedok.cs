@@ -16,8 +16,8 @@ namespace VarosiForgalom
             get => tartozkodasiIdo;
             set
             {
-                if (tartozkodasiIdo + value > 4) TulHosszuTartozkodas();
-                else tartozkodasiIdo += value;
+                if (tartozkodasiIdo + 1 > 5) TulHosszuTartozkodas();
+                else tartozkodasiIdo += 1;
             }
         }
         public abstract void TulHosszuTartozkodas();

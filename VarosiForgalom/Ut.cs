@@ -10,6 +10,7 @@ namespace VarosiForgalom
     {
         public string Nev { get; set; }
         public char UtIrany { get; set; }
+        public char TavozoIrany { get; set; }
         public Lampa Lampa { get; set; }
         public List<Auto> AutokUton { get; set; } = new List<Auto>();
         public List<Auto> AutokTavoz { get; set; } = new List<Auto>();
@@ -20,6 +21,7 @@ namespace VarosiForgalom
 
         public int[] KiirasHelye { get; set; }
         public int[] AutokHelye { get; set; }
+        public int[] TavozoAutokHelye { get; set; }
         public int AutoHossz {  get; set; }
 
         public Ut(string nev, char irany)
@@ -33,21 +35,29 @@ namespace VarosiForgalom
                 case 'E':
                     this.KiirasHelye = [100, 1];
                     this.AutokHelye = [93, 19];
+                    this.TavozoAutokHelye = [104, 1];
+                    this.TavozoIrany = 'D';
                     this.AutoHossz = 3;
                     break;
                 case 'K':
                     this.KiirasHelye = [198, 25];
                     this.AutokHelye = [111, 22];
-                    this.AutoHossz = 7;
+                    this.TavozoAutokHelye = [198, 26];
+                    this.TavozoIrany = 'N';
+                    this.AutoHossz = -7;
                     break;
                 case 'D':
                     this.KiirasHelye = [100, 49];
-                    this.AutokHelye = [103, 31];
-                    this.AutoHossz = 3;
+                    this.AutokHelye = [104, 31];
+                    this.TavozoAutokHelye = [93, 49];
+                    this.TavozoIrany = 'E';
+                    this.AutoHossz = -3;
                     break;
                 case 'N':
                     this.KiirasHelye = [1, 25];
                     this.AutokHelye = [90, 26];
+                    this.TavozoAutokHelye = [1, 22];
+                    this.TavozoIrany = 'K';
                     this.AutoHossz = 7;
                     break;
 
