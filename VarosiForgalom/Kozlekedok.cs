@@ -16,8 +16,8 @@ namespace VarosiForgalom
             get => tartozkodasiIdo;
             set
             {
-                if (tartozkodasiIdo + 1 > 5) TulHosszuTartozkodas();
-                else tartozkodasiIdo += 1;
+                if (value > 5) TulHosszuTartozkodas();
+                else tartozkodasiIdo = value;
             }
         }
         public abstract void TulHosszuTartozkodas();
@@ -34,12 +34,15 @@ namespace VarosiForgalom
             if (TartozkodikUt.Lampa.Allithato == 0)
             {
                 this.TartozkodikUt.Lampa.Allithato = 2;
-                throw new TimeoutException($"Az autós megrongálta a {TartozkodikUt.Nev} utca Lámpáját, a következő váltásnál nem használható");
+                throw new TimeoutException($"Az autós megrongálta a {TartozkodikUt.Nev} Lámpáját, a következő váltásnál nem használható");
             }
         }
     }
+
+    /*
     public class Gyalogos: Kozlekedok
     {
         public override void TulHosszuTartozkodas() { throw new NotImplementedException(); }
     }
+    */
 }

@@ -14,13 +14,12 @@ namespace VarosiForgalom
             Console.Clear();
             KeresztRajz();
             UtcaNevek(utak, kiiras);
+            LampaRajz(utak);
             AutoKiiras(utak);
         }
 
         public void KeresztRajz()
         {
-            
-
             for (int i = 0; i < 20; i++)
             {
                 Console.SetCursorPosition(90, i);
@@ -63,6 +62,134 @@ namespace VarosiForgalom
             {
                 Console.SetCursorPosition(90, i);
                 Console.Write("█         ║         █"); //21
+            }
+        }
+
+        public void LampaRajz(List<Ut> utak)
+        {
+            int x;
+            int y;
+            ConsoleColor szin;
+            foreach (Ut u in utak)
+            {
+                
+                switch (u.UtIrany) {
+                    case 'E':
+                        x = u.LampaHelye[0];
+                        y = u.LampaHelye[1];
+                        szin = u.Lampa.Allithato == 2 ? ConsoleColor.Red : ConsoleColor.White;
+                        Console.ForegroundColor = szin;
+                        //E lámpa
+                        Console.SetCursorPosition(x, y);
+                        Console.Write("╔════╗");
+
+                        Console.SetCursorPosition(x, y+1);
+                        Console.Write("║ ");
+                        if (u.Lampa.HaladasEngedely == false) Console.ForegroundColor = ConsoleColor.Red;
+                        else Console.ForegroundColor = ConsoleColor.Black;
+                        Console.Write("██");
+                        Console.ForegroundColor = szin;
+                        Console.Write(" ║");
+
+                        Console.SetCursorPosition(x, y+2);
+                        Console.Write("║    ║");
+
+                        Console.SetCursorPosition(x, y+3);
+                        Console.Write("║ ");
+                        if (u.Lampa.HaladasEngedely == true) Console.ForegroundColor = ConsoleColor.Green;
+                        else Console.ForegroundColor = ConsoleColor.Black;
+                        Console.Write("██");
+                        Console.ForegroundColor = szin;
+                        Console.Write(" ║");
+
+                        Console.SetCursorPosition(x, y+4);
+                        Console.Write("╚════╝");
+                        break;
+
+                    case 'K':
+                        x = u.LampaHelye[0];
+                        y = u.LampaHelye[1];
+                        szin = u.Lampa.Allithato == 2 ? ConsoleColor.Red : ConsoleColor.White;
+                        Console.ForegroundColor = szin;
+                        //K lámpa
+                        Console.SetCursorPosition(x, y);
+                        Console.Write("╔═══════╗");
+
+                        Console.SetCursorPosition(x, y+1);
+                        Console.Write("║ ");
+                        if (u.Lampa.HaladasEngedely == true) Console.ForegroundColor = ConsoleColor.Green;
+                        else Console.ForegroundColor = ConsoleColor.Black;
+                        Console.Write("██ ");
+                        if (u.Lampa.HaladasEngedely == false) Console.ForegroundColor = ConsoleColor.Red;
+                        else Console.ForegroundColor = ConsoleColor.Black;
+                        Console.Write("██");
+                        Console.ForegroundColor = szin;
+                        Console.Write(" ║");
+
+
+
+                        Console.SetCursorPosition(x, y+2);
+                        Console.Write("╚═══════╝");
+                        break;
+
+                    case 'D':
+                        x = u.LampaHelye[0];
+                        y = u.LampaHelye[1];
+                        szin = u.Lampa.Allithato == 2 ? ConsoleColor.Red : ConsoleColor.White;
+                        Console.ForegroundColor = szin;
+                        //D lámpa
+                        Console.SetCursorPosition(x, y);
+                        Console.Write("╔════╗");
+
+                        Console.SetCursorPosition(x, y + 1);
+                        Console.Write("║ ");
+                        if (u.Lampa.HaladasEngedely == true) Console.ForegroundColor = ConsoleColor.Green;
+                        else Console.ForegroundColor = ConsoleColor.Black;
+                        Console.Write("██");
+                        Console.ForegroundColor = szin;
+                        Console.Write(" ║");
+
+                        Console.SetCursorPosition(x, y + 2);
+                        Console.Write("║    ║");
+
+                        Console.SetCursorPosition(x, y + 3);
+                        Console.Write("║ ");
+                        if (u.Lampa.HaladasEngedely == false) Console.ForegroundColor = ConsoleColor.Red;
+                        else Console.ForegroundColor = ConsoleColor.Black;
+                        Console.Write("██");
+                        Console.ForegroundColor = szin;
+                        Console.Write(" ║");
+
+                        Console.SetCursorPosition(x, y + 4);
+                        Console.Write("╚════╝");
+                        break;
+
+                    case 'N':
+                        x = u.LampaHelye[0];
+                        y = u.LampaHelye[1];
+                        szin = u.Lampa.Allithato == 2 ? ConsoleColor.Red : ConsoleColor.White;
+                        Console.ForegroundColor = szin;
+                        //N lámpa
+                        Console.SetCursorPosition(x, y);
+                        Console.Write("╔═══════╗");
+
+                        Console.SetCursorPosition(x, y + 1);
+                        Console.Write("║ ");
+                        if (u.Lampa.HaladasEngedely == false) Console.ForegroundColor = ConsoleColor.Red;
+                        else Console.ForegroundColor = ConsoleColor.Black;
+                        Console.Write("██ ");
+                        if (u.Lampa.HaladasEngedely == true) Console.ForegroundColor = ConsoleColor.Green;
+                        else Console.ForegroundColor = ConsoleColor.Black;
+                        Console.Write("██");
+                        Console.ForegroundColor = szin;
+                        Console.Write(" ║");
+
+
+
+                        Console.SetCursorPosition(x, y + 2);
+                        Console.Write("╚═══════╝");
+                        break;
+                }
             }
         }
 
@@ -184,16 +311,10 @@ namespace VarosiForgalom
                     Console.Write("  ____ ");
                     Console.SetCursorPosition(x, y + 1);
                     Console.Write("◄|____|");
-                    //Console.SetCursorPosition(x, y + 2);
-                    //Console.Write("  ¯¯¯¯ ");
                     /*
                      *  ____ 
-                     *◄|    |
-                        ¯¯¯¯  
-                     * 
+                     *◄|____|
                      */
-
-                    
                     break;
 
                 case 'D':
@@ -218,9 +339,9 @@ namespace VarosiForgalom
                     Console.Write(" ____  ");
                     Console.SetCursorPosition(x - 7, y + 1);
                     Console.Write("|____|►");
-                    /*  ____  
-                     * |    |►
-                        ¯¯¯¯  
+                    /*
+                     *  ____  
+                     * |____||►
                      */
                     break;
             }
